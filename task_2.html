@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="task_2.css">
+	</head>
+	<body>
+		<div class="page">
+			<h1 class="reg-title">РЕГИСТРАЦИЯ</h1>
+			<form class="reg-form" action="/" method="POST">
+				<input type="hidden" name="hid" value="val"/>
+				<div class="reg-form__row">
+					<label class="label label_required" for="name">Имя</label>
+					<input class="input input_field" type="text" value="" id="name" required="required"/>
+				</div>
+				<div class="reg-form__row">
+					<label class="label label_required" for="surname">Фамилия</label>
+					<input class="input  input_field" type="text" value="" id="surname" required="required"/>
+				</div>
+				<div class="reg-form__row">
+					<label class="label label_required" for="mail">E-mail</label>
+					<input class="input  input_field" type="text" value="" id="mail" required="required"/>
+				</div>	
+				<div class="reg-form__row">
+					<label class="label label_required" for="pass">Пароль</label>
+					<input class="input  input_field" type="password" value="" id="pass" required="required"/>
+				</div>
+				<div class="reg-form__row">
+					<label class="label">Пол</label>
+					<div class="input">
+						<input class="" type="radio" name="sex" value="m" id="sex_m"/>
+						<label for="sex_m" class="label_radio">Мужской</label>
+						<input class="" type="radio" name="sex" value="w" id="sex_w"/>
+						<label for="sex_w" class="label_radio">Женский</label>
+						<input class="" type="radio" name="sex" value="undefined" checked id="sex_undefined">
+						<label for="sex_undefined" class="label_radio">Не определился</label>
+					</div>
+				</div>
+				<div class="reg-form__row">
+					<label class="label">Дата рождения</label>
+					<select>
+						<option>месяц</option>
+						<option>январь</option>
+						<option>февраль</option>
+						<option>март</option>
+						<option>апрель</option>
+						<option>май</option>
+						<option>июнь</option>
+						<option>июль</option>
+						<option>август</option>
+						<option>сентябрь</option>
+						<option>октябрь</option>
+						<option>ноябрь</option>
+						<option>декабрь</option>
+					</select>
+					<select>
+						<option>дата</option>
+						<option>1</option>
+						<option>2</option>
+						<option>3</option>
+						<option>4</option>
+						<option>5</option>
+						<option>6</option>
+						<option>7</option>
+						<option>8</option>
+						<option>9</option>
+						<option>10</option>
+						<option>11</option>
+						<option>12</option>
+						<option>13</option>
+						<option>14</option>
+						<option>15</option>
+						<option>16</option>
+						<option>17</option>
+						<option>18</option>
+						<option>19</option>
+						<option>20</option>
+						<option>21</option>
+						<option>22</option>
+						<option>23</option>
+						<option>24</option>
+						<option>25</option>
+						<option>26</option>
+						<option>27</option>
+						<option>28</option>
+						<option>19</option>
+						<option>30</option>
+						<option>31</option>
+					</select>
+
+				</div>
+				<div class="reg-form__row">
+					<button type="submit" class="reg-form__button">Отправить</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

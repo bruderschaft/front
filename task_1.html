@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<title>Frontend #1</title>
+    
+	<meta charset="UTF-8"></meta>
+    	<script type="text/javascript">
+    		function vote(outputElem) {
+			  var xhr = new XMLHttpRequest(); // (1)
+
+			  xhr.open('GET', 'localhost:8085', true); // (2)
+
+			  xhr.onreadystatechange = function() {  // (3)
+			    if (xhr.readyState != 4) return; // (3.1)
+
+			    outputElem.innerHTML = xhr.responseText; // (3.2)
+			  }
+
+			  outputElem.innerHTML = '...';
+			  xhr.send(null); // (4)
+			}
+    	</script>
+    </head>
+    <body>
+    	<button onclick="vote(this)">Нажми, чтобы голосовать</button>
+    	<div id="response"></div>
+    </body>
+</html>

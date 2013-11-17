@@ -1,0 +1,79 @@
+body{
+	background: #fafafa;
+}
+.page{
+	background-color: #FFB300;
+	padding: 15px;
+	width: 600px;
+	vertical-align: center;
+	font-family: Candara, Calibri, Segoe, "Segoe UI",Optima,Arial,sans-serif;
+	margin: 100px auto;
+	border-radius: 15px
+}
+
+.reg-title{
+	font-family: "Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;
+	margin: 0px 0px 5px;
+	color: #000000;;
+}
+
+.reg-form__row{
+	width: 100%;
+	margin-top: 10px;
+	font-family: Arial, sans-serif;
+	font-variant: small-caps;
+	font-size: 1.2em;	
+}
+
+.label{
+	display: inline-block;
+	width: 30%;
+}
+.label_required:after{
+	content: "*";
+	color: #f00;
+}
+.label_radio{
+	font-size: 0.8em;
+	font-variant: normal;
+	letter-spacing: 0px;
+	font-family:sans-serif;
+}
+
+.input{
+	display: inline-block;
+	width: 68%;
+}
+.input_field{
+	background-color: #FFDd7d;
+	border-radius: 0px;
+	border: 2px solid #FFDd7d;	
+}
+.input_field:focus{
+	background: #FFDd7d;
+	border: 2px solid #ff8100;
+}
+
+
+
+
+.reg-form__button{
+	margin-top: 10px;
+	background-color: #FFDd7d;
+	color: #000;
+	border-radius: 3px;
+	border:0px;
+	width: 90px;
+	height: 30px;
+}
+
+select{
+	background-color: #FFDd7d;
+	border: 2px solid #FFDd7d;
+	color: black;
+}
+select:focus{
+	background: #FFDd7d;
+	border: 2px solid #ff8100;
+	color: black;
+}
