@@ -1,5 +1,5 @@
 
-var sockjs_url = 'http://localhost:9998/echo';
+var sockjs_url = 'http://localhost:9998/desktop';
     var sockjs = new SockJS(sockjs_url);
     $('#first input').focus();
 

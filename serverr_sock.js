@@ -4,6 +4,8 @@ var sockjs = require('sockjs');
 var node_static = require('node-static');
 var Cookies = require('cookies');
 var fest = require('fest');
+var querystring = require('querystring');
+var utils = require('util');
 
 // 1. Echo sockjs server
 //sockjs_url :
@@ -37,30 +39,63 @@ already cached by the browser - it makes sense to
 reuse the sockjs url you're using in normally.
 */
 
-//sockkkkkk!!!
+/** вынесу когда-нибудь в отдельную функцию
+  *function connectMobile (mobileSession, desktopSession, token) {
+  *    mobileToDesktop[mobileSession] = desktopSession;
+  *    tokenToSessionId[token] = "";
+  *    sessionIdToToken[desktopSession] = "";
+  *}
+  */
+var toketToConn = {};
 var sockjs_opts = {sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"};
-
 var sockjs_desktop = sockjs.createServer(sockjs_opts);
-var connToConn = {};
 sockjs_desktop.on('connection', function(conn) {
-    conn.on('data', function(message) {
-        //connToConn.push(conn);
-        //console.log(connToConn);
-        conn["_session"]["session_id"] = 
-        console.log(conn["_session"]["session_id"])
-        //console.log(["session_id"]);
-        conn.write(message); //шлет обратно
+    
+    if (conn["_session"]["session_id"] === undefined) {
+            console.log("new connection");
+            var token = randomHash(5);
+            var desktop = randomHash(12);
+            conn["_session"]["session_id"] = desktop;
+            toketToConn[token] = conn;
+            console.log(conn);
+            console.log("desk " + toketToConn[token]);
+            conn.write("token: " + token);
+    }
+
+    conn.on('data', function(message) {               
+        /*conn.write(message); //шлет обратно*/
         console.log(message);
     });
 });
 
-var sockjs_mobile = sockjs.createServer(sockjs_opts);
+var sockjs_opts_mobile = {sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"/*,cookie: true*/};
+var MobileConnToDesk = {};
+var sockjs_mobile = sockjs.createServer(sockjs_opts_mobile);
 sockjs_mobile.on('connection', function(conn) {
     conn.on('data', function(message) {
-        connToConn.push(conn);
-        console.log(connToConn);
-        conn.write(message); //шлет обратно
-        console.log(message);
+        console.log("session_id" + conn["_session"]["session_id"]);
+        if (conn["_session"]["session_id"] === undefined) {
+            var mobile = randomHash(12);
+            console.log("new mobile");
+            var deskConn = toketToConn[message];
+            toketToConn[message] = "";
+            conn["_session"]["session_id"] = mobile;
+            MobileConnToDesk[mobile] = {
+                mobile: conn,
+                desktop: deskConn
+            }
+            
+            console.log(MobileConnToDesk[mobile]);
+            console.log(MobileConnToDesk[mobile]["mobile"]);            
+        } else{
+            var mobile = conn["_session"]["session_id"];
+            var connect = MobileConnToDesk[mobile]["desktop"];
+            connect.write(message);
+            console.log(connect);
+            console.log(MobileConnToDesk);
+        }
+        
+        /*conn.write(message); //шлет обратно*/
     });
 });
 
@@ -81,103 +116,99 @@ var randomHash = (function () {
 
 // 3. Usual http stuff
 var server = http.createServer();
-var sessionIdToToken = {};
-var tokenToSessionId = {};
-var counter = 0;
-var page;
+
+/** тут я пытался работать с куками
+  *var sessionIdToToken = {};
+  *var tokenToSessionId = {};
+  */
+
+var mobileToDesktop = {};   
 
 server.addListener('request', function(req, res) {
     console.log(req["headers"]["user-agent"]);
     if (req["headers"]["user-agent"].indexOf("mobila")!==-1) {
         if (req["method"] === "GET") {
-        page = fest.render('mobile.html');
-        res.write(page);
-        } else{
-            var qs = require('querystring');
-            console.log("req");
-            //console.log(request.post());
-            var body = '';
-            req.on('data', function (data) {
-                body += data;
-                body += '+++';
-            });
-            req.on('end', function () {
+            /*var cookies = new Cookies(req, res);
+            var GET_sessionId = cookies.get("JSESSIONID");
+            if ((GET_sessionId === undefined) || (mobileToDesktop[GET_sessionId] === undefined)) {
+                var mobileCookie = randomHash(11);
+                cookies.set("JSESSIONID", mobileCookie);
+            }
+            page = fest.render('mobile.html');
+            res.write(page);*/
+            res.write(fest.render("mobile1.html"));
+            res.end();
+        } /* сессии и все такое
 
-                //var POST = qs.parse(body);
-                // use POST
-                console.log(body);
-                    res.writeHead(200);
-                    res.end();
-
+            else{
+            var fullBody = '';
+            req.on('data', function(chunk) {
+                fullBody += chunk.toString();
             });
-            //console.log(req.getBody);
-        }
+            req.on('end', function() {
+                var decodedBody = querystring.parse(fullBody);
+                console.log(decodedBody['token']);
+                var token = decodedBody['token'];
+                //TODO: тут отдаем страничку с js, 
+                //который коннектит по сокету
+                res.write(fest.render("mobile1.html"));
+                
+                var cookies = new Cookies(req, res);
+                var GET_sessionId = cookies.get("JSESSIONID");
+                var tmp = {};
+                tmp["desktopSession"] = tokenToSessionId[token];
+                mobileToDesktop[GET_sessionId] = tmp;
+                tokenToSessionId[token] = "";
+                sessionIdToToken[tmp["desktopSession"]] = "";
+                
+                res.end();
+                });
+            }
+          */
     }else{
         //static_directory.serve(req, res);
         var cookies = new Cookies(req, res);
         var GET_sessionId = cookies.get("JSESSIONID");    
-        
         console.log("GET_sessionId = " + GET_sessionId);
-        var token, desktop;
 
-        
-        
-        //если пришел без куки, или нет у нас такой куки
-        if ((GET_sessionId === undefined) || (sessionIdToToken[GET_sessionId] === undefined)) {
-            desktop = randomHash(11);
-            token = randomHash(5);
-
-            cookies.set("JSESSIONID", desktop);
-
-            sessionIdToToken[desktop] = token;
-            tokenToSessionId[token] = desktop;
-
-            counter++;
-            connToConn
-            /**     безнадежно устарело
-            *connection["token"] = token;
-            *connections[desktop] = connection;
+          /** тут я пытался работать с куками
+            *   //если пришел без куки, или нет у нас такой куки
+            *if ((GET_sessionId === undefined) || (sessionIdToToken[GET_sessionId] === undefined)) {
+            *   desktop = randomHash(11);
+            *   token = randomHash(5);
+            *   cookies.set("JSESSIONID", desktop);
+            *   sessionIdToToken[desktop] = token;
+            *   tokenToSessionId[token] = desktop;
+            *   counter++;
+            *} else{
+            *   token = sessionIdToToken[GET_sessionId];
+            *}
+            *
             */
-        } else{
-            token = sessionIdToToken[GET_sessionId];
-        }
-            
-        page = fest.render('neew.html', {token: token});
-        console.log(page);
-        res.write(page);
-                
-        console.log("connections: ", tokenToSessionId);
-        console.log("sessionId: ", desktop);
-        console.log("end");
-//      console.log(req);  -  не делай так больше
-        //не нужно res.setHeader("Cookie", "s=44");
+        
+        var token, desktop;    
+        res.write(fest.render('neew.html', {token: token}));
+        res.end();
     }
-    res.end();
+    
 });
-
 
 server.addListener('upgrade', function(req,res){
-    res.end();
+    /*var cookies = new Cookies(req, sock);
+    var GET_sessionId = cookies.get("JSESSIONID");
+    console.log(GET_sessionId);
+    sock["_session"]["session_id"] = GET_sessionId;
+    console.log(ock["_session"]["session_id"]);*/
+    console.log(req);
+    console.log(res);
+    sock.end(); 
 });
 
-//sockkkk!!!
-sockjs_desktop.installHandlers(server, {prefix:'/echo'});
+sockjs_desktop.installHandlers(server, {prefix:'/desktop'});
+sockjs_mobile.installHandlers(server, {prefix:'/mobile'});
 
-/*server.addListener('/aa', function  (req,res){
-    res.write('hello aa');
-})*/
-console.log(' [*] Listening on 0.0.0.0:9998' );
-/*server.listen('/aa', function  () { 
-    res.write('sdkljf');
-})*/
+console.log(' [*] Listening on 127.0.0.1:9998, nginx-proxy on 127.0.0.1:9999' );
 server.listen(9998, '127.0.0.1');
 
 //static_directory.serve(req, res);  - что такое
 //разобраться с роутингом !!!
-
-
-/** почему 2 раза обрабатывается request
-  * как сделать роутинг нормально
-  * как нормально вешать обработчик события (server)
-  * как отдавать станичку и вставлять строки?(мб конкатенация)
-*/
