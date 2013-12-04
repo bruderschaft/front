@@ -15,7 +15,7 @@ var sockjs_url = 'http://localhost:9998/desktop';
     };
 
     sockjs.onopen = function() {print('[*] open', sockjs.protocol);};
-    sockjs.onmessage = function(e) {print('[.] message', e);};
+    sockjs.onmessage = function(e) {print('[.] message', e.data);};
     sockjs.onclose = function() {print('[*] close');};
 
     form.submit(function() {
