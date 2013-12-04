@@ -100,24 +100,21 @@ sockjs_mobile.on('connection', function(conn) {
             
             //console.log("new mobile");
             var deskConn = toketToConn[message];
-            var desktop = deskConn["_session"]["session_id"];
-            toketToConn[message] = "";
-            conn["_session"]["session_id"] = mobile;
-            MobileConnToDesk[mobile] = {
-                mobile: conn,
-                desktop: deskConn
+            if (deskConn === undefined) {
+                conn.write("bad token");
+            } else{
+                var desktop = deskConn["_session"]["session_id"];
+                toketToConn[message] = "";
+                conn["_session"]["session_id"] = mobile;
+                MobileConnToDesk[mobile] = {
+                    mobile: conn,
+                    desktop: deskConn
+                }
+                DeskConnToMobile[desktop] = {
+                    mobile: conn,
+                    desktop: deskConn
+                }
             }
-            DeskConnToMobile[desktop] = {
-                mobile: conn,
-                desktop: deskConn
-            }
-            //console.log("gut");
-            //console.log(MobileConnToDesk);
-            //console.log(DeskConnToMobile);
-            //console.log("gut");
-
-            //console.log(MobileConnToDesk[mobile]);
-            //console.log(MobileConnToDesk[mobile]["mobile"]);            
         } else{
             var mobile = conn["_session"]["session_id"];
             var connect = MobileConnToDesk[mobile]["desktop"];

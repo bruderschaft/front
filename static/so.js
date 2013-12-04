@@ -15,7 +15,22 @@ var sockjs_url = 'http://localhost:9998/desktop';
     };
 
     sockjs.onopen = function() {print('[*] open', sockjs.protocol);};
-    sockjs.onmessage = function(e) {print('[.] message', e.data);};
+    sockjs.onmessage = function(e) {
+        print('[.] message')
+        var data;
+        if (e.data.indexOf("{")!= -1) {
+            data = JSON.parse(e.data);
+        } else {
+            data = e.data;
+        }
+        
+        if (classOf(data) === 'String') {
+            print(data);
+        } else{
+            print(data.type);
+        } 
+
+    };
     sockjs.onclose = function() {print('[*] close');};
 
     form.submit(function() {
@@ -24,3 +39,14 @@ var sockjs_url = 'http://localhost:9998/desktop';
         inp.val('');
         return false;
     });
+function classOf(obj) {
+
+if (obj === null) return 'null';
+
+if (obj === undefined) return 'undefined';
+
+if (typeof obj === 'function') return 'function';
+
+return Object.prototype.toString.call(obj).slice(8, -1);
+
+}

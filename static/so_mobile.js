@@ -1,6 +1,6 @@
 
 var sockjs_url = 'http://localhost:9998/mobile';
-    var sockjs = new SockJS(sockjs_url);
+    sockjs = new SockJS(sockjs_url);
     $('#first input').focus();
 
     var div = $('#first div');
@@ -14,7 +14,9 @@ var sockjs_url = 'http://localhost:9998/mobile';
         div.scrollTop(div.scrollTop()+10000);
     };
 
-    sockjs.onopen = function() {print('[*] open', sockjs.protocol);};
+    sockjs.onopen = function() {
+        print('[*] open', sockjs.protocol);
+    };
     sockjs.onmessage = function(e) {print('[.] message', e.data);};
     sockjs.onclose = function() {print('[*] close');};
 
@@ -24,3 +26,4 @@ var sockjs_url = 'http://localhost:9998/mobile';
         inp.val('');
         return false;
     });
+// 4 сообщений - gas, 
