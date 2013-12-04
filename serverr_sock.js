@@ -80,6 +80,12 @@ sockjs_desktop.on('connection', function(conn) {
         console.log(message);
         console.log("message.data: " + message.data);
     });
+    conn.on('close', function (message) {
+        var desk = conn["_session"]["session_id"];
+        //console.log(desk);
+        var connect = DeskConnToMobile[desk]["mobile"];
+        connect.write("desktop disconnected.");
+    });
 });
 
 var sockjs_opts_mobile = {sockjs_url: "http://cdn.sockjs.org/sockjs-0.3.min.js"/*,cookie: true*/};
@@ -121,6 +127,11 @@ sockjs_mobile.on('connection', function(conn) {
         }
         
         /*conn.write(message); //шлет обратно*/
+    });
+    conn.on('close', function (message) {
+        var mobile = conn["_session"]["session_id"];
+        var connect = MobileConnToDesk[mobile]["desktop"];
+        connect.write("mobilka disconnected.");
     });
 });
 
