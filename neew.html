@@ -1,9 +1,10 @@
-<fest:template xmlns:fest="http://fest.mail.ru" context_name="json">
 <html>
 <head>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-    <style>
+	  <style>
+    body {
+    font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+  }
+   
       .box {
           width: 300px;
           float: left;
@@ -33,18 +34,27 @@
           font-family: "Arial";
       }
     </style>
-</head>
-<body>
-	<h1>SockJS Echo example</h1>
+    <link rel="stylesheet" type="text/css" href="fontawesome.css"/>
+    <meta charset="utf-8" />
 
+    
+    <script src="ovoid.js/core.js"></script>
+    <script src="ovoid.js/config.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="sockjs-0.3.min.js"></script>
+<script src="initial.js"></script>
+</head>
+<body onload="main();">
+	<h1>SockJS Echo example</h1>
     <div id="first" class="box">
       <div></div>
       <form><input autocomplete="off" value="Type here..."></input></form>
     </div>
-	<fest:value>json.token</fest:value>
-<script src="so.js"></script>
+
+    <canvas id="canvas" width="800" height="500" style="border: 0;"/>
+
+    
+  <script src="so.js"></script>
 </body>
 	
 </html>
-
-</fest:template>

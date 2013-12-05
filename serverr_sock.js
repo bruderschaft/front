@@ -6,6 +6,7 @@ var Cookies = require('cookies');
 var fest = require('fest');
 var querystring = require('querystring');
 var utils = require('util');
+var fs = require('fs');
 
 // ОБРАТНАЯ СВЯЗЬ О ДОСТАВКЕ СООБЩЕНИЙ
 // ЛОКАЛ СТОРАДЖ - ВОССТАНОВЛЕНИЕ СВЯЗИ КЛИЕНТА С СЕРВЕРОМ
@@ -119,6 +120,7 @@ sockjs_mobile.on('connection', function(conn) {
             var mobile = conn["_session"]["session_id"];
             var connect = MobileConnToDesk[mobile]["desktop"];
             connect.write(message);
+            console.log(message);
             //console.log(connect);
             //console.log(MobileConnToDesk);
         }
@@ -169,8 +171,18 @@ server.addListener('request', function(req, res) {
             }
             page = fest.render('mobile.html');
             res.write(page);*/
-            res.write(fest.render("mobile1.html"));
-            res.end();
+            
+            /** ну его в опу
+             *res.write(fest.render("mobile1.html"));
+             *res.end();
+             */
+
+             fs.readFile('mobile1.html', function (err, data) {
+                 if (err) throw err;
+                 res.write(data.toString());
+                 res.end();
+             });
+        
         } /* сессии и все такое
 
             else{
@@ -220,8 +232,16 @@ server.addListener('request', function(req, res) {
             */
         
         var token, desktop;    
-        res.write(fest.render('neew.html', {token: token}));
-        res.end();
+        //res.write(fest.render('neew.html', {token: token}));
+        
+        //res.write(fest.render('pittsdemo.html'));
+        //res.end();
+
+        fs.readFile('neew.html', {encoding: 'utf-8'}, function (err, data) {
+             if (err) throw err;
+             res.write(data);
+             res.end();
+        });
     }
     
 });
