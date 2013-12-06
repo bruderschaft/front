@@ -1,0 +1,16 @@
+<html>
+<head>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<script type="text/javascript">
+		document.addEventListener("keydown", move, false);
+		function move (event) {
+            var e = jQuery.Event("keydown", { keyCode: 64 });
+            jQuery("body").trigger(e);
+            console.log(e);
+		}
+	</script>
+</head>
+<body>
+<textarea></textarea>
+</body>
+</html>

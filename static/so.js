@@ -8,7 +8,7 @@ var sockjs_url = 'http://localhost:9998/desktop';
     var form = $('#first form');
 
     var print = function(m, type) {
-        div.append('<code>' + '<i class="' + ((type === "m") ? 'icon-mobile-phone" style="font-size:35px;' : 'icon-desktop" style="font-size:25px;') + '"></i>' + m + '</code>');
+        div.append('<code>' + '<i class="' + ((type === "m") ? 'icon-mobile-phone" style="font-size:35px;"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' : 'icon-desktop" style="font-size:25px;"></i>&nbsp;&nbsp;') + '' + m + '</code>');
         div.append($("<br>"));
         div.scrollTop(div.scrollTop()+10000);
     };
