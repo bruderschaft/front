@@ -261,7 +261,7 @@ sockjs_desktop.installHandlers(server, {prefix:'/desktop'});
 sockjs_mobile.installHandlers(server, {prefix:'/mobile'});
 
 console.log(' [*] Listening on 127.0.0.1:9998, nginx-proxy on 127.0.0.1:9999' );
-server.listen(9998, '10.42.0.255');
+server.listen(9998, '10.42.0.52');
 
 //static_directory.serve(req, res);  - что такое
 //разобраться с роутингом !!!

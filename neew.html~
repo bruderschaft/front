@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+	  <style>
+    body {
+    font-family: "Helvetica Neue", Helvetica, Arial, Sans-Serif;
+  }
+   
+      .box {
+          width: 300px;
+          float: left;
+          margin: 0 20px 0 20px;
+      }
+      .box div, .box input {
+          border: 1px solid;
+          -moz-border-radius: 4px;
+          border-radius: 4px;
+          width: 100%;
+          padding: 0px;
+          margin: 5px;
+      }
+      .box div {
+          border-color: grey;
+          height: 300px;
+          overflow: auto;
+      }
+      .box input {
+          height: 30px;
+      }
+      h1 {
+          margin-left: 30px;
+      }
+      body {
+          background-color: #F0F0F0;
+          font-family: "Arial";
+      }
+      code{
+        font-family: Verdana;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="fontawesome.css"/>
+    <meta charset="utf-8" />
+    <title>Title</title>
+    
+    <script src="ovoid.js/core.js?23"></script>
+    <script src="ovoid.js/config.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="sockjs-0.3.min.js"></script>
+<script src="initial.js"></script>
+</head>
+<body onload="main();">
+	<h1>SockJS Echo example</h1>
+    <div id="first" class="box">
+      <div></div>
+      <form><input autocomplete="off" value="Type here..."></input></form>
+    </div>
+
+    <canvas id="canvas" width="800" height="500" style="border: 0;"/>
+
+    
+  <script src="so.js"></script>
+</body>
+	
+</html>
