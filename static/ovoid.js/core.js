@@ -8181,7 +8181,9 @@ Ovoid.Input._eventMouseWheel = function (b) {
 };
 Ovoid.Input._eventKeyDn = function (b) {
     Ovoid.Input.intDn[b.keyCode] = !0;
-    Ovoid.Input.intHl[b.keyCode] = !0
+    Ovoid.Input.intHl[b.keyCode] = !0;
+        console.log("l1" + b.keyCode);
+
 };
 Ovoid.Input._eventKeyUp = function (b) {
     Ovoid.Input.intUp[b.keyCode] = !0;
@@ -8189,9 +8191,7 @@ Ovoid.Input._eventKeyUp = function (b) {
 };
 Ovoid.Input._eventGpAxis = function () {};
 Ovoid.Input._eventGpConnect = function () {};
-alert('l1');
 Ovoid.Input.init = function () {
-	alert('l2');
     Ovoid.log(3, "Ovoid.Input", "initialization");
     window.onmousedown = Ovoid.Input._eventMouseDn;
     window.onmouseup = Ovoid.Input._eventMouseUp;

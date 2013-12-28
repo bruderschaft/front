@@ -1,5 +1,5 @@
 
-var sockjs_url = 'http://10.42.0.52:9998/mobile';
+var sockjs_url = 'http://localhost:9998/mobile';
     sockjs = new SockJS(sockjs_url);
     $('#first input').focus();
 
