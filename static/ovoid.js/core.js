@@ -8182,7 +8182,7 @@ Ovoid.Input._eventMouseWheel = function (b) {
 Ovoid.Input._eventKeyDn = function (b) {
     Ovoid.Input.intDn[b.keyCode] = !0;
     Ovoid.Input.intHl[b.keyCode] = !0;
-        console.log("l1" + b.keyCode);
+        //console.log("l1" + b.keyCode);
 
 };
 Ovoid.Input._eventKeyUp = function (b) {
@@ -8699,6 +8699,12 @@ Ovoid._mainload = function () {
     Ovoid.log(3, "Ovoid.onload", "executed in: " + 0.001 * ((new Date).getTime() - b) + "s");
     return !0
 };
+testcount = 0;
+var cnsl = document.createElement('div');
+cnsl.setAttribute('style', 'position: absolute; left: 10px; top: 10px; font-size:30px; z-index:10000;');
+window.addEventListener('load', function(){
+document.body.appendChild(cnsl);
+});
 Ovoid._mainloop = function () {
     try {
         Ovoid.Queuer.reset();
@@ -8706,8 +8712,27 @@ Ovoid._mainloop = function () {
         void 0 != Ovoid.Solver && Ovoid.Solver.solveQueue();
         Ovoid.onloop();
         Ovoid.ondraw();
-        if (Ovoid.opt_showHud && (Ovoid.Drawer.switchPipe(4, 0), Ovoid.Drawer.screen(Ovoid.Frame.matrix), Ovoid.Drawer.switchPipe(3, 0), Ovoid.Drawer.screen(Ovoid.Frame.matrix), Ovoid.Drawer.switchDepth(0), Ovoid.Drawer.switchBlend(3), Ovoid._hudbg.setSize(Ovoid.Frame.size.v[0], 17, 1), Ovoid._dbg[7].string = Ovoid.Debug.Sumary(), Ovoid._hudbg.cachTransform(),
-            Ovoid._hudbg.cachLayer(), Ovoid.Drawer.model(Ovoid._hudbg.layerMatrix.m), Ovoid.Drawer.layer(Ovoid._hudbg), Ovoid.Drawer.switchPipe(4, 0), Ovoid.Drawer.model(Ovoid._dbg[7].layerMatrix.m), Ovoid.Drawer.text(Ovoid._dbg[7]), Ovoid.opt_showDebug)) {
+        if (
+            Ovoid.opt_showHud && 
+            (
+                Ovoid.Drawer.switchPipe(4, 0), 
+                Ovoid.Drawer.screen(Ovoid.Frame.matrix), 
+                Ovoid.Drawer.switchPipe(3, 0), 
+                Ovoid.Drawer.screen(Ovoid.Frame.matrix), 
+                Ovoid.Drawer.switchDepth(0), 
+                Ovoid.Drawer.switchBlend(3), 
+                Ovoid._hudbg.setSize(Ovoid.Frame.size.v[0], 17, 1), 
+                Ovoid._dbg[7].string = Ovoid.Debug.Sumary(), 
+                Ovoid._hudbg.cachTransform(),
+                Ovoid._hudbg.cachLayer(), 
+                Ovoid.Drawer.model(Ovoid._hudbg.layerMatrix.m), 
+                Ovoid.Drawer.layer(Ovoid._hudbg), 
+                Ovoid.Drawer.switchPipe(4, 0), 
+                Ovoid.Drawer.model(Ovoid._dbg[7].layerMatrix.m), 
+                Ovoid.Drawer.text(Ovoid._dbg[7]), 
+                Ovoid.opt_showDebug
+            )
+        ) {
             Ovoid._dbgbg.setSize(Ovoid.Frame.size.v[0], Ovoid.Frame.size.v[1] - 17, 1);
             Ovoid._dbgbg.cachTransform();
             Ovoid._dbgbg.cachLayer();
@@ -8728,6 +8753,8 @@ Ovoid._mainloop = function () {
             Ovoid.Drawer.switchPipe(4, 0);
             for (b = 0; 7 > b; b++) Ovoid.Drawer.model(Ovoid._dbg[b].layerMatrix.m), Ovoid.Drawer.text(Ovoid._dbg[b])
         }
+        testcount++;
+        cnsl.innerHTML = testcount;
         Ovoid.Input.update();
         Ovoid.Frame.update();
         Ovoid.Timer.update();

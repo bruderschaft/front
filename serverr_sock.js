@@ -58,7 +58,7 @@ sockjs_desktop.on('connection', function(conn) {
     
     if (conn["_session"]["session_id"] === undefined) {
         //console.log("new connection");
-        var token = randomHash(5);
+        var token = randomHash(2);
         var desktop = randomHash(12);
         conn["_session"]["session_id"] = desktop;
         toketToConn[token] = conn;
@@ -160,7 +160,7 @@ var server = http.createServer();
 var mobileToDesktop = {};   
 
 server.addListener('request', function(req, res) {
-    //console.log(req["headers"]["user-agent"]);
+    console.log(req["headers"]["user-agent"]);
     if (req["headers"]["user-agent"].indexOf("mobila")!==-1) {
         if (req["method"] === "GET") {
             /*var cookies = new Cookies(req, res);

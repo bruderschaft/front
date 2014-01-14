@@ -59,7 +59,7 @@ sockjs_desktop.on('connection', function(conn) {
     
     if (conn["_session"]["session_id"] === undefined) {
         //console.log("new connection");
-        var token = randomHash(5);
+        var token = randomHash(2);
         var desktop = randomHash(12);
         conn["_session"]["session_id"] = desktop;
         toketToConn[token] = conn;
@@ -85,8 +85,14 @@ sockjs_desktop.on('connection', function(conn) {
     conn.on('close', function (message) {
         var desk = conn["_session"]["session_id"];
         //console.log(desk);
-        var connect = DeskConnToMobile[desk]["mobile"];
-        connect.write("desktop disconnected.");
+        
+        if (DeskConnToMobile[desk] != undefined) {
+            var connect = DeskConnToMobile[desk]["mobile"];
+            connect.write("desktop disconnected.");    
+        } else{
+
+        }
+        
     });
 });
 
@@ -130,8 +136,9 @@ sockjs_mobile.on('connection', function(conn) {
     });
     conn.on('close', function (message) {
         var mobile = conn["_session"]["session_id"];
-        var connect = MobileConnToDesk[mobile]["desktop"];
-        connect.write("mobilka disconnected.");
+        if(MobileConnToDesk[mobile] != undefined)
+            {var connect = MobileConnToDesk[mobile]["desktop"];
+        connect.write("mobilka disconnected.");}
     });
 });
 
@@ -162,7 +169,8 @@ var mobileToDesktop = {};
 
 server.addListener('request', function(req, res) {
     //console.log(req["headers"]["user-agent"]);
-    if (req["headers"]["user-agent"].indexOf("mobila")!==-1) {
+    if (req["headers"]["user-agent"].indexOf("iPhone")!==-1 || req["headers"]["user-agent"].indexOf("Android")!==-1 || req["headers"]["user-agent"].indexOf("OPR")!==-1) {
+        console.log("iphone");
         if (req["method"] === "GET") {
             /*var cookies = new Cookies(req, res);
             var GET_sessionId = cookies.get("JSESSIONID");
@@ -178,14 +186,14 @@ server.addListener('request', function(req, res) {
              *res.end();
              */
 
-             fs.readFile('mobile1.html', function (err, data) {
+             fs.readFile('mobile-mobile.html', function (err, data) {
                  if (err) throw err;
                  res.write(data.toString());
                  res.end();
              });
         
         } /* сессии и все такое
-
+            
             else{
             var fullBody = '';
             req.on('data', function(chunk) {
@@ -212,6 +220,7 @@ server.addListener('request', function(req, res) {
             }
           */
     }else{
+        console.log(req["headers"]["user-agent"]);
         //static_directory.serve(req, res);
         var cookies = new Cookies(req, res);
         var GET_sessionId = cookies.get("JSESSIONID");    
@@ -262,7 +271,7 @@ sockjs_desktop.installHandlers(server, {prefix:'/desktop'});
 sockjs_mobile.installHandlers(server, {prefix:'/mobile'});
 
 console.log(' [*] Listening on 127.0.0.1:9998, nginx-proxy on 127.0.0.1:9999' );
-server.listen(9998, '10.42.0.52');
+server.listen(9998, '10.42.0.1');
 
 //static_directory.serve(req, res);  - что такое
 //разобраться с роутингом !!!

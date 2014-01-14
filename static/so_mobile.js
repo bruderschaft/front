@@ -1,5 +1,5 @@
 
-var sockjs_url = 'http://10.42.0.52:9998/mobile';
+var sockjs_url = 'http://10.42.0.1:9998/mobile';
     sockjs = new SockJS(sockjs_url);
     $('#first input').focus();
 
@@ -14,10 +14,10 @@ var sockjs_url = 'http://10.42.0.52:9998/mobile';
     };
 
     sockjs.onopen = function() {
-        print('[*] open', sockjs.protocol);
+        print('[*] socket has been opened', sockjs.protocol);
     };
     sockjs.onmessage = function(e) {print(e.data, "d");};
-    sockjs.onclose = function() {print('[*] close');};
+    sockjs.onclose = function() {print('[*] socket has been closed');};
 
     form.submit(function() {
         print(inp.val(), "m");

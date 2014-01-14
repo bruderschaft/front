@@ -8697,8 +8697,20 @@ Ovoid._mainload = function () {
     Ovoid.log(3, "Ovoid.onload", "executed in: " + 0.001 * ((new Date).getTime() - b) + "s");
     return !0
 };
+var _testcounter = 0;
+var _testElement = document.createElement('div').setAttribute('style', 'position:ABSOLUTE; left:10px; top:10px; font-size:25px;');
+
+function testcounter () {
+    _testcounter++;
+    _testElement.innerHTML = _testcounter + " " + Ovoid.Input.intDn[80] +" "+ Ovoid.Input.intHl[b.keyCode];
+}
+
+document.body.addEventListener('load', function () {
+    document.body.appendChild(_testElement);            
+})
 Ovoid._mainloop = function () {
     try {
+        testcounter();
         Ovoid.Queuer.reset();
         Ovoid.Queuer.queueScene(Ovoid.rscene);
         void 0 != Ovoid.Solver && Ovoid.Solver.solveQueue();

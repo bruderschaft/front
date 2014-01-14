@@ -1,5 +1,5 @@
 
-var sockjs_url = 'http://10.42.0.52:9998/desktop';
+var sockjs_url = 'http://10.42.0.1:9998/desktop';
     var sockjs = new SockJS(sockjs_url);
     $('#first input').focus();
 
@@ -12,8 +12,9 @@ var sockjs_url = 'http://10.42.0.52:9998/desktop';
         div.append($("<br>"));
         div.scrollTop(div.scrollTop()+10000);
     };
+    var timerId;
 
-    sockjs.onopen = function() {print('[*] open', sockjs.protocol);};
+    sockjs.onopen = function() {print('[*] socket has been opened', sockjs.protocol);};
     sockjs.onmessage = function(e) {
         var data;
         if (e.data.indexOf("{")!= -1) {
@@ -29,10 +30,51 @@ event1.initUIEvent("keypress", true, true, window, 1);
 event1.keyCode = data.type; */
             //var event1 = new Event('keydown', { 'keyCode': data.type });
             //canvass.dispatchEvent(event1);
-            Ovoid.Input._eventKeyDn({keyCode:data.type});
+
+Ovoid.Input._eventKeyDn({keyCode:data.type});
+timerId = setTimeout(function() { Ovoid.Input._eventKeyUp({keyCode:data.type}) }, 50);
+
+//Ovoid._mainloop();
+ //Ovoid.onloop();
+            // //alert("1");
+//Ovoid.Input._eventKeyUp({keyCode:data.type});
+            //alert("2");
             
-            Ovoid._mainloop();
-            
+//Ovoid._mainloop();
+//Ovoid.Input.update();
+//window.requestAnimFrame(Ovoid._mainloop);
+/*var event1 = new Event("KeyboardEvent");
+
+event1.initKeyEvent(                                                                                      
+                 "keydown",        //  in DOMString typeArg,                                                           
+                  true,             //  in boolean canBubbleArg,                                                        
+                  true,             //  in boolean cancelableArg,                                                       
+                  null,             //  in nsIDOMAbstractView viewArg,  Specifies UIEvent.view. This value may be null.     
+                  false,            //  in boolean ctrlKeyArg,                                                               
+                  false,            //  in boolean altKeyArg,                                                        
+                  false,            //  in boolean shiftKeyArg,                                                      
+                  false,            //  in boolean metaKeyArg,                                                       
+                   data.type,               //  in unsigned long keyCodeArg,                                                      
+                   0);              //  in unsigned long charCodeArg); 
+document.dispatchEvent(event1);
+
+var event2 = new Event("KeyboardEvent");            
+event2.initKeyEvent(                                                                                      
+                 "keyup",        //  in DOMString typeArg,                                                           
+                  true,             //  in boolean canBubbleArg,                                                        
+                  true,             //  in boolean cancelableArg,                                                       
+                  null,             //  in nsIDOMAbstractView viewArg,  Specifies UIEvent.view. This value may be null.     
+                  false,            //  in boolean ctrlKeyArg,                                                               
+                  false,            //  in boolean altKeyArg,                                                        
+                  false,            //  in boolean shiftKeyArg,                                                      
+                  false,            //  in boolean metaKeyArg,                                                       
+                   data.type,               //  in unsigned long keyCodeArg,                                                      
+                   0);              //  in unsigned long charCodeArg); 
+document.dispatchEvent(event2);*/
+         /*if (data.type == 39) {
+            RmoveR();
+            RmoveCt();
+         } */  
             //console.log("keydown");
         } else {
             data = e.data;
@@ -46,7 +88,7 @@ event1.keyCode = data.type; */
         } 
 
     };
-    sockjs.onclose = function() {print('[*] close');};
+    sockjs.onclose = function() {print('[*] socket has been closed');};
 
     form.submit(function() {
         print(inp.val(), "d");
