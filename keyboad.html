@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="static/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="static/FontAwesome/css/font-awesome.min.css">
+		<style>
+			.keyboard{
+				width: 164px;
+				padding: 5px;
+				margin: 0 auto;
+			}
+			.keyboard__keys{
+				margin-top: 5px;
+				width: inherit;
+			}
+			.keys-line{
+				margin-bottom: 5px;
+				width: inherit;
+			}
+			.controls-line{
+				margin-top: 5px;
+				display: inline-block;
+				padding: 0 2px;
+			}
+			.backspace{
+			}
+			.keyboard__input{
+				border: 1px solid #ccc;
+				height: 35px;
+				border-radius: 4px;
+				width: 100%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="keyboard">
+			<div id="keyboard__input" class="keyboard__input">
+			</div>
+			<div class="keyboard__keys">
+				<div class="keys-line">
+					<button class="btn-large btn-info">1</button>
+					<button class="btn-large btn-info">2</button>
+					<button class="btn-large btn-info">3</button>
+				</div>
+				<div class="keys-line">
+					<button class="btn-large btn-info">4</button>
+					<button class="btn-large btn-info">5</button>
+					<button class="btn-large btn-info">6</button>
+				</div>
+				<div class="keys-line">
+					<button class="btn-large btn-info">7</button>
+					<button class="btn-large btn-info">8</button>
+					<button class="btn-large btn-info">9</button>
+				</div>
+				<div class="controls-line">
+					<span class="submit">
+						<button class="btn-primary btn-large">Submit</button>
+					</span>
+					<span class="backspace">
+						<button class="btn-large btn-primary">
+							<i class="fa fa-arrow-left"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var buttons = document.getElementsByTagName('BUTTON');
+			var input = document.getElementById('keyboard__input');
+			for (var i = 0; i < buttons.length; i++) {
+				if (buttons[i].innerHTML <= 9 && buttons[i].innerHTML >= 1) {
+					buttons[i].addEventListener('click', function(event) {
+						input.innerHTML += event.srcElement.firstChild.data;
+						//console.log(event.srcElement.firstChild.data);
+					})
+				}
+			};
+		</script>
+	</body>
+</html>
