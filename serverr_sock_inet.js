@@ -59,7 +59,7 @@ sockjs_desktop.on('connection', function(conn) {
     
     if (conn["_session"]["session_id"] === undefined) {
         //console.log("new connection");
-        var token = randomHash(2);
+        var token = randomUppercase(1) + randomLowercase(1);//randomHash(2);
         var desktop = randomHash(12);
         conn["_session"]["session_id"] = desktop;
         toketToConn[token] = conn;
@@ -122,6 +122,7 @@ sockjs_mobile.on('connection', function(conn) {
                     mobile: conn,
                     desktop: deskConn
                 }
+                //desktop.write('Соединение установлено!');
             }
         } else{
             var mobile = conn["_session"]["session_id"];
@@ -157,6 +158,28 @@ var randomHash = (function () {
     };
 })();
 
+var randomUppercase = (function () {
+    var letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    return function (len) {
+        var result = '';
+        for (var i=0; i <  len; i++) {
+            result += letters[Math.floor(Math.random() * letters.length)];
+        };
+        return result;
+    };
+})();
+
+var randomLowercase = (function () {
+    var letters = 'abcdefghijklmnopqrstuvwxyz';
+    return function (len) {
+        var result = '';
+        for (var i=0; i <  len; i++) {
+            result += letters[Math.floor(Math.random() * letters.length)];
+        };
+        return result;
+    };
+})();
+
 // 3. Usual http stuff
 var server = http.createServer();
 
@@ -169,7 +192,7 @@ var mobileToDesktop = {};
 
 server.addListener('request', function(req, res) {
     //console.log(req["headers"]["user-agent"]);
-    if (req["headers"]["user-agent"].indexOf("iPhone")!==-1 || req["headers"]["user-agent"].indexOf("Android")!==-1 || req["headers"]["user-agent"].indexOf("OPR")!==-1) {
+    if (req["headers"]["user-agent"].indexOf("iPhone")!==-1 || req["headers"]["user-agent"].indexOf("Android")!==-1 || req["headers"]["user-agent"].indexOf("OPR")!==-1 || req["headers"]["user-agent"].indexOf("iPad")!==-1) {
         console.log("iphone");
         if (req["method"] === "GET") {
             /*var cookies = new Cookies(req, res);
@@ -271,7 +294,7 @@ sockjs_desktop.installHandlers(server, {prefix:'/desktop'});
 sockjs_mobile.installHandlers(server, {prefix:'/mobile'});
 
 console.log(' [*] Listening on 127.0.0.1:9998, nginx-proxy on 127.0.0.1:9999' );
-server.listen(9998, '10.42.0.1');
+server.listen(9998, '0.0.0.0');
 
 //static_directory.serve(req, res);  - что такое
 //разобраться с роутингом !!!

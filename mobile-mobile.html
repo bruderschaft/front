@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script src="sockjs-0.3.min.js"></script>
+
+	<style type="text/css">
+	    body{
+	    	margin: 0;
+	    	-webkit-user-select: none;
+	    	-moz-user-select: none;
+	    	-ms-user-select: none;
+	    	user-select: none;
+	    }
+		.controls{
+			width: 310px;
+			height: 100%;
+			margin: 0 auto;
+			z-index: 1;
+		}
+		.stop{
+			background-image: url(stop.png);
+			background-size: 100%;
+			width: 154px;
+			height: 197px;
+			display: inline-block;
+		}
+		.gas{
+			background-image: url(gas.png);
+			background-size: 100%;
+			display: inline-block;
+			width: 162px;
+			height: 197px;
+		}
+		.background{
+			background-image: url(background.png);
+			background-size: 100%;
+			width: 316px;
+			height: 70px;
+			text-align: center;
+		}
+		.gas_stop{
+			height: 197px;
+			width: 316px;
+		}
+		.calibre{
+		}
+		.calibre-container{
+			width: 100%;
+			position: fixed;
+			z-index: 2;
+			background-color: rgba(15,15,15,0.8);
+			text-align: center;
+		}
+		#calibre_next{
+			margin-top: 25px;
+			display: none;
+		}
+		#form{
+			display: none;
+		}
+	</style>
+	<meta name="viewport" content="
+	    initial-scale=1.0,
+	    user-scalable=no,
+	    maximum-scale=1,
+	    minimum-scale=1">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div class="calibre-container" id="calibre-container">
+		<button class="btn btn-info calibre" id="calibre">калибровать штурвал</button>
+		<form id="form" class="form-search">
+		<input autocomplete="off" placeholder="Введите токен" id="inp" name="qq" class="input-medium search-query"></input>
+		<button type="submit" class="btn">GO!</button>
+	</form>
+	</div>
+	<script type="text/javascript">
+	document.getElementById('calibre-container').style.height = window.screen.height + "px";
+	document.getElementById('calibre-container').style.paddingTop = (document.documentElement.clientHeight - document.getElementById('calibre').clientHeight)/2 + "px";
+
+	
+	</script>
+	<div class="controls">
+		<div class="gas_stop">
+			<span class="stop" id="stop"></span><span 
+			class="gas" id="gas"></span>
+		</div>
+			<div class="background">
+				<button class="btn btn-info calibre_next" id="calibre_next">калибровать штурвал</button>
+				<!-- <button type="submit" class="btn">GO!</button>-->
+			</div>
+	</div>
+	
+
+	<script type="text/javascript" src="rudder_mobile.js"></script>
+	<script type="text/javascript">	
+	</script>
+	<div id="abs"></div>
+	<div id="alpha"></div>
+	<div id="betha"></div>
+	<div id="gamma"></div>
+</body>
+</html>
